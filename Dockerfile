@@ -10,4 +10,4 @@ RUN dpkg -i /tmp/fibonacci.deb || apt-get install -f -y
 
 WORKDIR /usr/local/bin
 
-CMD ["fibon]
+CMD ["sh", "-c", "echo 10 | fibonacci"]

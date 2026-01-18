@@ -63,7 +63,7 @@ jobs:
           set -eux
           docker build -t fibonacci:latest .
 
-	- name: Run Docker container
-	  run: |
-	    echo 10 | docker run --rm fibonacci:latest
+      - name: Run Docker container
+        run: |
+          docker run --rm fibonacci:latest
 
