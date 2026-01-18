@@ -6,7 +6,7 @@ RUN apt-get update && \
 
 COPY fibonacci.deb /tmp/fibonacci.deb
 
-RUN dpkg -i /tmp/fibonaccideb || apt-get install -f -y
+RUN dpkg -i /tmp/fibonacci.deb || apt-get install -f -y
 
 WORKDIR /usr/local/bin
 
