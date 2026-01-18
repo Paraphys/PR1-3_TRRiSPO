@@ -1,0 +1,11 @@
+Package: fibonacci
+Version: 1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Depends: libc6 (>= 2.31), gcc (>= 9)
+Maintainer: Vasya Utyaev
+Description: Фибоначчи
+
+
+
