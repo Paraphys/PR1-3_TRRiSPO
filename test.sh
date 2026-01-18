@@ -1,27 +1,51 @@
 #!/bin/bash
-set -eux
+set -e
 
-BINARY="usr/local/bin/fibonacci"
+BINARY=usr/local/bin/fibonacci
 
+# Проверка наличия бинарника
 if [ ! -f "$BINARY" ]; then
-  echo "Ошибка: бинарный файл не найден по пути $BINARY"
+  echo "Бинарный файл fibonacci не найден"
   exit 1
 fi
 
-INPUT="В этом примере строки есть несколько длинных слов. Проверяем корректность работы программы!"
+# Тест 1: корректный ввод
+INPUT="10"
+EXPECTED="55"
 
-EXPECTED="несколько корректность"
+RESULT=$(echo "$INPUT" | $BINARY | tail -n 1)
 
-RESULT=$(echo "$INPUT" | "$BINARY" | tail -n 1 | sed 's/.*: //')
-
-if [ "$RESULT" == "$EXPECTED" ]; then
-  echo "Тест пройден"
-else
-  echo "Тест не пройден"
-  echo "Ожидалось:"
-  echo "$EXPECTED"
-  echo "Получено:"
-  echo "$RESULT"
+if [ "$RESULT" != "$EXPECTED" ]; then
+  echo "Тест 1 не пройден"
+  echo "Ожидалось: $EXPECTED"
+  echo "Получено: $RESULT"
   exit 1
 fi
+
+# Тест 2: граничное значение
+INPUT="0"
+EXPECTED="0"
+
+RESULT=$(echo "$INPUT" | $BINARY | tail -n 1)
+
+if [ "$RESULT" != "$EXPECTED" ]; then
+  echo "Тест 2 не пройден"
+  echo "Ожидалось: $EXPECTED"
+  echo "Получено: $RESULT"
+  exit 1
+fi
+
+# Тест 3: некорректный ввод
+INPUT="50"
+
+RESULT=$(echo "$INPUT" | $BINARY || true)
+
+echo "$RESULT" | grep -q "ERROR"
+
+if [ $? -ne 0 ]; then
+  echo "Тест 3 не пройден (ожидалась ошибка)"
+  exit 1
+fi
+
+echo "Все тесты пройдены успешно"
 
