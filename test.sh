@@ -9,11 +9,11 @@ if [ ! -f "$BINARY" ]; then
   exit 1
 fi
 
-# Тест 1: корректный ввод
+# ---------- Тест 1 ----------
 INPUT="10"
 EXPECTED="55"
 
-RESULT=$(echo "$INPUT" | $BINARY | tail -n 1)
+RESULT=$(echo "$INPUT" | $BINARY | grep -oE '[0-9]+$')
 
 if [ "$RESULT" != "$EXPECTED" ]; then
   echo "Тест 1 не пройден"
@@ -22,11 +22,11 @@ if [ "$RESULT" != "$EXPECTED" ]; then
   exit 1
 fi
 
-# Тест 2: граничное значение
+# ---------- Тест 2 ----------
 INPUT="0"
 EXPECTED="0"
 
-RESULT=$(echo "$INPUT" | $BINARY | tail -n 1)
+RESULT=$(echo "$INPUT" | $BINARY | grep -oE '[0-9]+$')
 
 if [ "$RESULT" != "$EXPECTED" ]; then
   echo "Тест 2 не пройден"
@@ -35,7 +35,7 @@ if [ "$RESULT" != "$EXPECTED" ]; then
   exit 1
 fi
 
-# Тест 3: некорректный ввод
+# ---------- Тест 3 (ошибка) ----------
 INPUT="50"
 
 RESULT=$(echo "$INPUT" | $BINARY || true)
@@ -43,7 +43,7 @@ RESULT=$(echo "$INPUT" | $BINARY || true)
 echo "$RESULT" | grep -q "ERROR"
 
 if [ $? -ne 0 ]; then
-  echo "Тест 3 не пройден (ожидалась ошибка)"
+  echo "Тест 3 не пройден (ожидалось сообщение об ошибке)"
   exit 1
 fi
 
